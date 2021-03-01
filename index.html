@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book Library</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+  </head>
+  <body>
+    <section class="container">
+      <div class="section columns is-centered">
+        <h1 class="title has-text-primary">Library</h1>
+      </div>
+
+      <section class="section">
+        <div class="container columns">
+          <div class="column">
+            <div class="field">
+              <label class="label">Book name</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="Can't hurt me"
+                  value="Can't hurt me"
+                  id="bookInput"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">Author</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="David Goggins"
+                  value="David Goggins"
+                  id="authorInput"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">Page number</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="324"
+                  value="324"
+                  id="pageNumberInput"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">Genre</label>
+              <div class="control">
+                <div class="select" id="GenreInput" value="Fantasy">
+                  <select>
+                    <option>Productivity</option>
+                    <option>Fantasy</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container columns is-centered">
+          <div class="column container">
+            <div class="field is-grouped">
+              <div class="control">
+                <button class="button is-link" id="submitButton">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="columns">
+          <div class="column">
+            <div class="card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left"></div>
+                  <div class="media-content">
+                    <p class="title is-4">Can't hurt me</p>
+                  </div>
+                </div>
+                <div class="content">
+                  <div class="container">
+                    <p class="title is-6">
+                      <span class="has-text-weight-medium">Author: </span>
+                      <span>David Goggins</span>
+                    </p>
+                    <p class="title is-6">
+                      <strong>Pages: </strong><span>442</span>
+                    </p>
+                    <p class="title is-6">
+                      <strong>Genre: </strong><span>LifeBook</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column"></div>
+          <div class="column"></div>
+        </div>
+      </section>
+    </section>
+    <script src="script.js"></script>
+  </body>
+</html>
