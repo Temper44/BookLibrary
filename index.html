@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
     />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <section class="container">
@@ -63,12 +64,23 @@
             <div class="field">
               <label class="label">Genre</label>
               <div class="control">
-                <div class="select" id="GenreInput" value="Fantasy">
-                  <select>
+                <div class="select">
+                  <select id="genreInput">
                     <option>Productivity</option>
                     <option>Fantasy</option>
                   </select>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">read the book?</label>
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" id="readInput" />
+                  yes
+                </label>
               </div>
             </div>
           </div>
@@ -83,36 +95,41 @@
           </div>
         </div>
       </section>
-      <section>
-        <div class="columns">
-          <div class="column">
-            <div class="card">
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-left"></div>
-                  <div class="media-content">
-                    <p class="title is-4">Can't hurt me</p>
-                  </div>
+      <section id="displaySection">
+        <div class="books-grid">
+          <!--  <div class="card">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <p class="title is-4">Can't hurt me</p>
                 </div>
-                <div class="content">
-                  <div class="container">
-                    <p class="title is-6">
-                      <span class="has-text-weight-medium">Author: </span>
-                      <span>David Goggins</span>
-                    </p>
-                    <p class="title is-6">
-                      <strong>Pages: </strong><span>442</span>
-                    </p>
-                    <p class="title is-6">
-                      <strong>Genre: </strong><span>LifeBook</span>
-                    </p>
-                  </div>
+              </div>
+              <div class="content">
+                <div class="container block">
+                  <p class="title is-6" id="bookName">
+                    <span class="has-text-weight-medium">Author: </span>
+                    <span>David Goggins</span>
+                  </p>
+                  <p class="title is-6">
+                    <strong>Pages: </strong><span>442</span>
+                  </p>
+                  <p class="title is-6">
+                    <strong>Genre: </strong><span>LifeBook</span>
+                  </p>
+                </div>
+                <div class="field is-grouped">
+                  <p class="control">
+                    <button class="button is-primary readButton">read</button>
+                  </p>
+                  <p class="control">
+                    <button class="button is-danger removeButton">
+                      remove
+                    </button>
+                  </p>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="column"></div>
-          <div class="column"></div>
+          </div> -->
         </div>
       </section>
     </section>
