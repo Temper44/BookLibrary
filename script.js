@@ -5,6 +5,7 @@ function initApp(){
 books = [];
 document.querySelector("#submitButton").addEventListener("click", receiveInput);
 document.querySelector(".books-grid").addEventListener("click", cardInteraction);
+document.querySelector("#removeAllButton").addEventListener("click", removeAll);
 }
 
 
@@ -22,11 +23,12 @@ function receiveInput(e){
         //check if duplicate Name
         if(checkDuplicate(name)){ /* checkDuplicate(name) === undefined) */
             createNewBook(name,author,page,genre,read);
-            clearFields();
+         //   clearFields();
             displayBooks();
+            updateNumbers();
         }else{
-            alert(`The Book: ${name} is already stored!`);
-            clearFields();
+           // alert(`The Book: ${name} is already stored!`);
+           // clearFields();
         }      
     }else{
         alert("Please fill out the text inputs!");
@@ -158,16 +160,20 @@ function btnThemeColor(item){
 
 function cardInteraction(e){
    // console.log(e.target.closest(".card"));
-   let currentBookName = e.target.closest(".card-content").firstElementChild.firstElementChild.firstElementChild.textContent
-    if(e.target.id=="readButton"){
-        //toggle
-        toggleRead(e.target,currentBookName);
-    }else if(e.target.className=="button is-danger removeButton"){
-        //delete
-        e.target.closest(".card").remove();
-        removeBookOfArray(currentBookName)
-        displayBooks();
-    }
+   console.log(e.target);
+      if(e.target.id=="readButton"){
+          //toggle
+          let currentBookName = e.target.closest(".card-content").firstElementChild.firstElementChild.firstElementChild.textContent
+          toggleRead(e.target,currentBookName);
+          updateNumbers();
+      }else if(e.target.className=="button is-danger removeButton"){
+          //delete
+          let currentBookName = e.target.closest(".card-content").firstElementChild.firstElementChild.firstElementChild.textContent
+          e.target.closest(".card").remove();
+          removeBookOfArray(currentBookName)
+          displayBooks();
+          updateNumbers();
+      }
 }
 
  function removeBookOfArray(book){
@@ -210,4 +216,27 @@ function changeReadStatusOfArray(bool,currentBookName){
             bool? item.read = true : item.read = false;
         }
     });
+}
+
+function updateNumbers(){
+    let totalBooksNumber=document.querySelector("#totalBooksNumber");
+    let readNumber=document.querySelector("#readNumber");
+    let notReadNumber=document.querySelector("#notReadNumber");
+    
+    totalBooksNumber.textContent=books.length;
+    let count=0;
+    for(let item of books){
+      if(item.read===true){
+        count++;      
+      }       
+    }
+    readNumber.textContent=count;
+    notReadNumber.textContent=books.length-count
+}
+
+function removeAll(){
+  document.querySelector(".books-grid").innerHTML="";
+  books=[];
+  displayBooks();
+  updateNumbers();
 }

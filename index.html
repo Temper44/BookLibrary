@@ -15,7 +15,22 @@
       <div class="section columns is-centered">
         <h1 class="title has-text-primary">Library</h1>
       </div>
-
+      <div class="box is-flex is-justify-content-center">
+        <div class="field is-grouped has-text-weight-medium">
+          <p class="control">
+            Total Books:
+            <span class="has-text-weight-normal" id="totalBooksNumber"> 0</span>
+          </p>
+          <p class="control">
+            read: <span class="has-text-weight-normal" id="readNumber"> 0</span>
+          </p>
+          <p class="control">
+            not read:
+            <span class="has-text-weight-normal" id="notReadNumber"> 0</span>
+          </p>
+        </div>
+      </div>
+      <div class="section columns is-centered"></div>
       <section class="section">
         <div class="container columns">
           <div class="column">
@@ -88,8 +103,14 @@
         <div class="container columns is-centered">
           <div class="column container">
             <div class="field is-grouped">
-              <div class="control">
-                <button class="button is-link" id="submitButton">Submit</button>
+                <div class="control">
+                  <button class="button is-link" id="submitButton">Submit</button>
+                </div>
+                <div class="control">
+                  <button class="button is-danger is-light" id="removeAllButton">
+                    remove all
+                  </button>
+                </div>
               </div>
             </div>
           </div>
