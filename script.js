@@ -72,7 +72,7 @@ function checkDuplicate(name){
     }else{
         res=true; 
     }
-    console.log(res);
+   // console.log(res);
     return res;
 }
 
@@ -251,8 +251,8 @@ function saveData(){
 
 //pulls books from local storage when page is refreshed
 function restoreData(){
- // books = JSON.parse(localStorage.getItem("books"));
-  console.log(JSON.parse(localStorage.getItem("books")));
+  books = JSON.parse(localStorage.getItem("books"));
+ // console.log(JSON.parse(localStorage.getItem("books")));
   if(books === null){
     books=[];
   }
