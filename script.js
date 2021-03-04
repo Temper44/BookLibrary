@@ -1,11 +1,25 @@
 initApp();
 
 function initApp(){
-//EventHandler submit -> create new Book
 books = [];
 document.querySelector("#submitButton").addEventListener("click", receiveInput);
 document.querySelector(".books-grid").addEventListener("click", cardInteraction);
 document.querySelector("#removeAllButton").addEventListener("click", removeAll);
+}
+
+//Book class
+class Book{
+  constructor(name,author,page,genre,read){
+      this.name=name;
+      this.author=author;
+      this.page=page;
+      this.genre=genre;
+      this.read=read;
+  };
+
+  toString(){
+      return this.name+" "+this.author+" "+this.page+" "+this.genre+" "+this.read;
+  }    
 }
 
 
@@ -17,18 +31,17 @@ function receiveInput(e){
     let genre = document.querySelector("#genreInput").value;
     let read = document.querySelector("#readInput").checked;
     
-  //  console.log(name,author,page,genre,read);
     //check if valid
     if(checkValid(name,author,page,genre,read)){
         //check if duplicate Name
         if(checkDuplicate(name)){ /* checkDuplicate(name) === undefined) */
             createNewBook(name,author,page,genre,read);
-         //   clearFields();
+         // clearFields();
             displayBooks();
             updateNumbers();
         }else{
-           // alert(`The Book: ${name} is already stored!`);
-           // clearFields();
+            alert(`The Book: ${name} is already stored!`);
+            clearFields();
         }      
     }else{
         alert("Please fill out the text inputs!");
@@ -63,29 +76,13 @@ function checkDuplicate(name){
     return res;
 }
 
-
+// create new Book an store it in array
 function createNewBook(name,author,page,genre,read){
-    // console.log(name,author,page,genre);
     let book = new Book(name,author,page,genre,read);
-   // console.log(b1.toString());
     addBook(book);
-    
 }
 
-//Book class
-class Book{
-    constructor(name,author,page,genre,read){
-        this.name=name;
-        this.author=author;
-        this.page=page;
-        this.genre=genre;
-        this.read=read;
-    };
 
-    toString(){
-        return this.name+" "+this.author+" "+this.page+" "+this.genre+" "+this.read;
-    }    
-}
 
 // Add Book to Array
  function addBook(book){
@@ -110,7 +107,8 @@ function displayBooks(){
         let readH = readStatus(item);
         let btnTheme = btnThemeColor(item);
        // console.log(readH);
-        str+=`
+        str+=
+        `
         <div class="card">
         <div class="card-content">
           <div class="media">          
@@ -158,6 +156,7 @@ function btnThemeColor(item){
     return item.read===true?"success":"primary";
 }
 
+//decide what to do with given interaction
 function cardInteraction(e){
    // console.log(e.target.closest(".card"));
    console.log(e.target);
@@ -175,22 +174,19 @@ function cardInteraction(e){
           updateNumbers();
       }
 }
-
+//Remove book from array
  function removeBookOfArray(book){
-   //console.log(book);
    books.forEach(function(item){
         if(item.name === book){
-           // console.log("match")
             var index = books.indexOf(item);
-          //  console.log(index);
              if (index !== -1) {
                 books.splice(index, 1);
-            }  
-           // console.log(books);           
+            }          
         }
     }); 
 } 
 
+//Toggle read/not read
 function toggleRead(readButton,currentBookName){
     status = readButton.textContent.trim();
     if(status === "read"){
@@ -210,6 +206,7 @@ function toggleRead(readButton,currentBookName){
     }
 }
 
+//change Ready Status of Books in Array
 function changeReadStatusOfArray(bool,currentBookName){
     books.forEach(function(item){
         if(item.name===currentBookName){
@@ -218,6 +215,7 @@ function changeReadStatusOfArray(bool,currentBookName){
     });
 }
 
+// Update the book Numbers
 function updateNumbers(){
     let totalBooksNumber=document.querySelector("#totalBooksNumber");
     let readNumber=document.querySelector("#readNumber");
@@ -231,9 +229,10 @@ function updateNumbers(){
       }       
     }
     readNumber.textContent=count;
-    notReadNumber.textContent=books.length-count
+    notReadNumber.textContent=books.length-count;
 }
 
+//Remove All books from Array and  HTML
 function removeAll(){
   document.querySelector(".books-grid").innerHTML="";
   books=[];
