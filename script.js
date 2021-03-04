@@ -87,6 +87,7 @@ function createNewBook(name,author,page,genre,read){
 // Add Book to Array
  function addBook(book){
     books.push(book);
+    saveData();
    // console.log(books);
 } 
 
@@ -164,12 +165,14 @@ function cardInteraction(e){
           //toggle
           let currentBookName = e.target.closest(".card-content").firstElementChild.firstElementChild.firstElementChild.textContent
           toggleRead(e.target,currentBookName);
+          saveData();
           updateNumbers();
       }else if(e.target.className=="button is-danger removeButton"){
           //delete
           let currentBookName = e.target.closest(".card-content").firstElementChild.firstElementChild.firstElementChild.textContent
           e.target.closest(".card").remove();
-          removeBookOfArray(currentBookName)
+          removeBookOfArray(currentBookName);
+          saveData();
           displayBooks();
           updateNumbers();
       }
@@ -237,5 +240,23 @@ function removeAll(){
   document.querySelector(".books-grid").innerHTML="";
   books=[];
   displayBooks();
+  saveData();
   updateNumbers();
 }
+
+// setting Library to be stored in local storage
+function saveData(){
+  localStorage.setItem("books",JSON.stringify(books));
+}
+
+//pulls books from local storage when page is refreshed
+function restoreData(){
+ // books = JSON.parse(localStorage.getItem("books"));
+  console.log(JSON.parse(localStorage.getItem("books")));
+  if(books === null){
+    books=[];
+  }
+  displayBooks();
+}
+
+restoreData();
