@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -102,7 +103,7 @@
         </div>
         <div class="container columns is-centered">
           <div class="column container">
-            <div class="field is-grouped">
+            <div class="field is-grouped" id="controlButtons">
                 <div class="control">
                   <button class="button is-link" id="submitButton">Submit</button>
                 </div>
@@ -147,6 +148,9 @@
                       remove
                     </button>
                   </p>
+                   <p class="control">
+                    <i class="fas fa-cog fa-lg" id="option"></i> 
+                    </p>
                 </div>
               </div>
             </div>

@@ -5,6 +5,10 @@
   padding: 2rem;
 }
 
+#option {
+  cursor: pointer;
+}
+
 @media (max-width: 1200px) {
   .books-grid {
     grid-template-columns: repeat(2, 1fr);

@@ -1,10 +1,18 @@
-initApp();
+
+
+
+document.addEventListener("readystatechange", (e) =>{
+  if(e.target.readyState === "complete"){
+    initApp();
+  }
+});
 
 function initApp(){
 books = [];
 document.querySelector("#submitButton").addEventListener("click", receiveInput);
 document.querySelector(".books-grid").addEventListener("click", cardInteraction);
 document.querySelector("#removeAllButton").addEventListener("click", removeAll);
+document.querySelector(".books-grid").addEventListener("click", updateItem);
 }
 
 //Book class
@@ -41,7 +49,7 @@ function receiveInput(e){
             updateNumbers();
         }else{
             alert(`The Book: ${name} is already stored!`);
-            clearFields();
+           // clearFields();
         }      
     }else{
         alert("Please fill out the text inputs!");
@@ -139,6 +147,9 @@ function displayBooks(){
               <p class="control">
                 <button class="button is-danger removeButton">remove</button>
               </p>
+              <p class="control">
+                <i class="fas fa-cog fa-lg" id="option"></i>
+              </p>
             </div>
           </div>
         </div>
@@ -160,7 +171,7 @@ function btnThemeColor(item){
 //decide what to do with given interaction
 function cardInteraction(e){
    // console.log(e.target.closest(".card"));
-   console.log(e.target);
+   //console.log(e.target);
       if(e.target.id=="readButton"){
           //toggle
           let currentBookName = e.target.closest(".card-content").firstElementChild.firstElementChild.firstElementChild.textContent
@@ -257,6 +268,170 @@ function restoreData(){
     books=[];
   }
   displayBooks();
+}
+
+
+//Options Eventlistenre
+function updateItem(e){
+  if(e.target.id === "option"){
+    let currentBookName = e.target.closest(".card-content").firstElementChild.firstElementChild.firstElementChild.textContent
+    //get Values from Array
+    let currentItem = getValuesOfItem(currentBookName);
+    //updateForm
+    updateForm(currentItem);
+    //create Update Button
+    createUpdateButton();
+    //set Focus
+    setFocus();
+    //disable other Buttons
+    disableButtons();
+    //disable other Cards
+    disableCards(currentItem);
+
+    console.log(currentItem.name);
+    document.querySelector("#updateButton").addEventListener("click", function(){
+      receiveUpdatedInput(currentItem);
+    }, { once: true });
+  }
+}
+
+
+function getValuesOfItem(currentBookName){
+  let obj;
+  books.forEach(function(item){
+    if(item.name===currentBookName){
+      obj=item; 
+    }
+  });
+  return obj;
+}
+
+function updateForm(currentItem){
+  document.querySelector("#bookInput").value=currentItem.name;
+  document.querySelector("#authorInput").value=currentItem.author;
+  document.querySelector("#pageNumberInput").value=currentItem.page;
+  document.querySelector("#genreInput").value=currentItem.genre;
+  document.querySelector("#readInput").checked=currentItem.read;
+}
+
+function createUpdateButton(){
+  //check if createUpdateButton already exists
+  if(!document.querySelector("#updateButton")){
+    let p = document.createElement("p");
+    p.classList.add("control");
+    let updateButton = document.createElement("Button");
+    updateButton.classList.add("button", "is-success");
+    updateButton.id="updateButton";
+    updateButton.textContent="Update";
+    p.appendChild(updateButton);
+    document.querySelector("#controlButtons").appendChild(p);
+  }
+}
+
+function removeUpdateButton(){
+  if(document.querySelector("#updateButton")){
+    document.querySelector("#updateButton").remove();
+  }
+}
+
+function setFocus(){
+  document.querySelector("#bookInput").focus();
+}
+
+function disableButtons(){
+  document.querySelector("#submitButton").disabled = true;
+  document.querySelector("#removeAllButton").disabled = true;
+}
+
+function enableButtons(){
+  document.querySelector("#submitButton").disabled = false;
+  document.querySelector("#removeAllButton").disabled = false;
+}
+
+function receiveUpdatedInput(currentItem){
+  console.log(currentItem.name);
+  
+  let name = document.querySelector("#bookInput").value;
+  let author = document.querySelector("#authorInput").value;
+  let page = document.querySelector("#pageNumberInput").value;
+  let genre = document.querySelector("#genreInput").value;
+  let read = document.querySelector("#readInput").checked;
+  
+  //check if valid
+  if(checkValid(name,author,page,genre,read)){
+      //check if duplicate Name
+      if(checkDuplicate(name)){ /* checkDuplicate(name) === undefined) */
+          overrideItem(name,author,page,genre,read,currentItem);
+          displayBooks();
+          updateNumbers(); 
+          enableButtons();
+          removeUpdateButton();
+          enableEventListener();
+          clearFields();
+          
+      }else{
+          alert(`The Book: ${name} is already stored!`);
+          enableButtons();
+          removeUpdateButton(); 
+          enableCards();
+          enableEventListener();
+          //clearFields();
+      }      
+  }else{
+      alert("Please fill out the text inputs!");
+  }
+}
+
+function overrideItem(name,author,page,genre,read,currentItem){
+
+  books.forEach(function(item){
+    if(item.name === currentItem.name){
+      item.name=name;
+      item.author=author;
+      item.page=page;
+      item.genre=genre;
+      item.read=read;
+    }
+  });
+  console.log("override")
+  saveData();
+}
+
+function disableCards(currentItem){
+  let cards = document.querySelectorAll(".card");
+  console.log(cards);
+  cards = Array.from(cards);
+  cards.forEach((card) => {
+    if(card.firstElementChild.firstElementChild.firstElementChild.textContent.trim()!==currentItem.name){
+      Array.from(card.firstElementChild.children[1].children[1].children).forEach((p)=>{
+      p.firstElementChild.disabled=true;
+        if(p.firstElementChild.id==="option"){
+          p.firstElementChild.style.color="lightgrey";
+          p.firstElementChild.style.cursor="not-allowed";
+          document.querySelector(".books-grid").removeEventListener("click", updateItem);
+        };
+      });
+    }
+  });
+}
+
+function enableCards(){
+  let cards = document.querySelectorAll(".card");
+  cards = Array.from(cards);
+  cards.forEach((card) => {
+    
+      Array.from(card.firstElementChild.children[1].children[1].children).forEach((p)=>{
+      p.firstElementChild.disabled=false;
+        if(p.firstElementChild.id==="option"){
+          p.firstElementChild.style.color="inherit";
+          p.firstElementChild.style.cursor="pointer";
+        };
+      });
+  });
+}
+
+function enableEventListener(){
+  document.querySelector(".books-grid").addEventListener("click", updateItem);
 }
 
 restoreData();
